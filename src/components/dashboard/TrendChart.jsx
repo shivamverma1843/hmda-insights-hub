@@ -22,15 +22,16 @@ const tooltipStyle = {
   padding: "8px 12px",
 };
 
-export default function TrendChart() {
+export default function TrendChart({ data }) {
+  const rows = data ?? annualMetrics;
   return (
     <ChartCard
       title="Application & Origination Volume"
-      subtitle="Annual HMDA-reported mortgage applications and originations, 2019–2025"
+      subtitle="Annual HMDA-reported mortgage applications and originations"
     >
       <div className="h-72 w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={annualMetrics} margin={{ top: 10, right: 12, left: 0, bottom: 0 }}>
+          <AreaChart data={rows} margin={{ top: 10, right: 12, left: 0, bottom: 0 }}>
             <defs>
               <linearGradient id="gApps" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="#4f46e5" stopOpacity={0.35} />
@@ -64,15 +65,13 @@ export default function TrendChart() {
   );
 }
 
-export function RateTrendChart() {
+export function RateTrendChart({ data }) {
+  const rows = data ?? annualMetrics;
   return (
-    <ChartCard
-      title="Median Interest Rate"
-      subtitle="30-year fixed mortgage median rate (%)"
-    >
+    <ChartCard title="Median Interest Rate" subtitle="30-year fixed mortgage median rate (%)">
       <div className="h-56 w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={annualMetrics} margin={{ top: 10, right: 12, left: 0, bottom: 0 }}>
+          <LineChart data={rows} margin={{ top: 10, right: 12, left: 0, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
             <XAxis dataKey="year" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} />
             <YAxis
@@ -91,7 +90,8 @@ export function RateTrendChart() {
   );
 }
 
-export function LoanAmountChart() {
+export function LoanAmountChart({ data }) {
+  const rows = data ?? annualMetrics;
   return (
     <ChartCard
       title="Total Loan Amount Originated"
@@ -99,7 +99,7 @@ export function LoanAmountChart() {
     >
       <div className="h-56 w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={annualMetrics} margin={{ top: 10, right: 12, left: 0, bottom: 0 }}>
+          <AreaChart data={rows} margin={{ top: 10, right: 12, left: 0, bottom: 0 }}>
             <defs>
               <linearGradient id="gAmt" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="#8b5cf6" stopOpacity={0.35} />
