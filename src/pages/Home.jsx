@@ -76,6 +76,13 @@ export default function Home() {
                 ))}
               </div>
               <Link
+                to="/reports"
+                className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-card px-3 py-1.5 text-xs font-medium text-foreground shadow-sm transition hover:bg-muted"
+              >
+                <FileBarChart className="h-3.5 w-3.5" />
+                Reports
+              </Link>
+              <Link
                 to="/upload"
                 className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-card px-3 py-1.5 text-xs font-medium text-foreground shadow-sm transition hover:bg-muted"
               >

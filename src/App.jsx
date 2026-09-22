@@ -9,6 +9,12 @@ import ScrollToTop from './components/ScrollToTop';
 // Add page imports here
 import Home from "@/pages/Home";
 import Upload from "@/pages/Upload";
+import Reports from "@/pages/Reports";
+import Q1MarketSize from "@/pages/Q1MarketSize";
+import Q2Geography from "@/pages/Q2Geography";
+import Q3SiteBuiltPremium from "@/pages/Q3SiteBuiltPremium";
+import Q4CreditAccess from "@/pages/Q4CreditAccess";
+import Q5Forecast from "@/pages/Q5Forecast";
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -39,6 +45,12 @@ const AuthenticatedApp = () => {
       {/* Add your page Route elements here */}
       <Route path="/" element={<Home />} />
       <Route path="/upload" element={<Upload />} />
+      <Route path="/reports" element={<Reports />} />
+      <Route path="/reports/q1" element={<Q1MarketSize />} />
+      <Route path="/reports/q2" element={<Q2Geography />} />
+      <Route path="/reports/q3" element={<Q3SiteBuiltPremium />} />
+      <Route path="/reports/q4" element={<Q4CreditAccess />} />
+      <Route path="/reports/q5" element={<Q5Forecast />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
