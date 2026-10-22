@@ -23,7 +23,7 @@ const tooltipStyle = {
 };
 
 export default function Q3SiteBuiltPremium() {
-  const [yearRange, setYearRange] = useState([2017, 2025]);
+  const [yearRange, setYearRange] = useState([2018, 2025]);
 
   const dualData = useMemo(() => {
     return FULL_YEARS.filter((y) => y >= yearRange[0] && y <= yearRange[1]).map((y) => {

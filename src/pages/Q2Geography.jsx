@@ -27,7 +27,7 @@ const tooltipStyle = {
 };
 
 export default function Q2Geography() {
-  const [yearRange, setYearRange] = useState([2017, 2025]);
+  const [yearRange, setYearRange] = useState([2018, 2025]);
   const [state, setState] = useState(STATES[0].code);
 
   const valueByState = useMemo(() => {
@@ -113,7 +113,7 @@ export default function Q2Geography() {
       </ChartCard>
 
       {selectedState && (
-        <ChartCard title={`${selectedState.name} · median value trend`} subtitle={`CAGR ${selectedState.cagr}% (2017–2025)`}>
+        <ChartCard title={`${selectedState.name} · median value trend`}         subtitle={`CAGR ${selectedState.cagr}% (2018–2025)`}>
           <div className="flex flex-wrap gap-3">
             {FULL_YEARS.map((y) => (
               <div key={y} className="rounded-lg border border-border bg-muted/30 px-3 py-2">

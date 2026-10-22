@@ -8,7 +8,7 @@ const REPORTS = [
     to: "/reports/q1",
     question: "Business Question 1",
     title: "Market Size & Value Trend",
-    desc: "Site-built single-family purchase originations and median property value, 2017–2025, with year-over-year change.",
+    desc: "Site-built single-family purchase originations and median property value, 2018–2025, with year-over-year change.",
     icon: TrendingUp,
     accent: "bg-blue-50 text-blue-600",
   },
@@ -61,7 +61,7 @@ export default function Reports() {
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
           <div>
             <h1 className="font-display text-lg font-semibold text-foreground sm:text-xl">Reports</h1>
-            <p className="text-xs text-muted-foreground">HMDA market analysis · 2017–2025</p>
+            <p className="text-xs text-muted-foreground">HMDA market analysis · 2018–2025</p>
           </div>
           <Link to="/" className="text-sm font-medium text-muted-foreground hover:text-foreground">
             Dashboard

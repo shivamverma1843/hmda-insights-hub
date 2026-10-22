@@ -25,7 +25,7 @@ const tooltipStyle = {
 };
 
 export default function Q4CreditAccess() {
-  const [yearRange, setYearRange] = useState([2017, 2025]);
+  const [yearRange, setYearRange] = useState([2018, 2025]);
   const [state, setState] = useState(STATES[0].code);
 
   // Top 5 fastest-growing states

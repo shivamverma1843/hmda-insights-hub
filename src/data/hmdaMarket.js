@@ -1,12 +1,11 @@
-// Extended HMDA market dataset for 2017–2025 business questions.
+// Extended HMDA market dataset for 2018–2025 business questions.
 // Includes national, state, MSA, manufactured-home, denial-rate, and forecast data.
 // Figures are illustrative aggregates reflecting public HMDA reporting trends.
 
-export const FULL_YEARS = [2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025];
+export const FULL_YEARS = [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025];
 
 // National site-built, owner-occupied, single-family home-purchase loans
 export const nationalAnnual = [
-  { year: 2017, originations: 6_000_000, medianProperty: 340_000, denialRate: 10.8, medianRate: 3.99 },
   { year: 2018, originations: 6_100_000, medianProperty: 352_000, denialRate: 11.2, medianRate: 4.54 },
   { year: 2019, originations: 5_500_000, medianProperty: 360_000, denialRate: 9.6, medianRate: 4.05 },
   { year: 2020, originations: 8_200_000, medianProperty: 375_000, denialRate: 8.2, medianRate: 3.11 },
@@ -19,7 +18,6 @@ export const nationalAnnual = [
 
 // Manufactured home median property value (national)
 export const manufacturedAnnual = [
-  { year: 2017, medianProperty: 85_000 },
   { year: 2018, medianProperty: 88_000 },
   { year: 2019, medianProperty: 92_000 },
   { year: 2020, medianProperty: 96_000 },
@@ -59,9 +57,12 @@ const STATES_RAW = [
 ];
 
 function buildSeries(base, growthRates) {
-  const vals = { 2017: base };
+  const vals = {};
+  let cur = base * (1 + growthRates[0]);
+  vals[FULL_YEARS[0]] = Math.round(cur);
   for (let i = 1; i < FULL_YEARS.length; i++) {
-    vals[FULL_YEARS[i]] = Math.round(vals[FULL_YEARS[i - 1]] * (1 + growthRates[i - 1]));
+    cur = cur * (1 + growthRates[i]);
+    vals[FULL_YEARS[i]] = Math.round(cur);
   }
   return vals;
 }
@@ -72,7 +73,7 @@ function cagr(start, end, years) {
 
 // Denial rate per state per year (around denialBase with a national-style cycle)
 function buildDenial(denialBase) {
-  const cycle = [0, 0.4, -1.2, -3.0, -3.8, 1.0, 2.3, 1.1, -0.4];
+  const cycle = [0.4, -1.2, -3.0, -3.8, 1.0, 2.3, 1.1, -0.4];
   const vals = {};
   FULL_YEARS.forEach((y, i) => {
     vals[y] = +(denialBase + cycle[i]).toFixed(1);
@@ -87,9 +88,9 @@ export const STATES = STATES_RAW.map((s) => {
     name: s.name,
     region: s.region,
     values,
-    cagr: +cagr(s.base, values[2025], 8).toFixed(2),
+    cagr: +cagr(values[2018], values[2025], 7).toFixed(2),
     denial: buildDenial(s.denialBase),
-    originations: Math.round(s.base * 0.02 + 20000),
+    originations: Math.round(values[2018] * 0.02 + 20000),
   };
 }).sort((a, b) => b.cagr - a.cagr);
 
@@ -118,7 +119,7 @@ export const MSAS = MSAS_RAW.map((m) => {
     name: m.name,
     state: m.state,
     values,
-    cagr: +cagr(m.base, values[2025], 8).toFixed(2),
+    cagr: +cagr(values[2018], values[2025], 7).toFixed(2),
   };
 }).sort((a, b) => b.cagr - a.cagr);
 

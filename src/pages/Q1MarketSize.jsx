@@ -25,7 +25,7 @@ const tooltipStyle = {
 };
 
 export default function Q1MarketSize() {
-  const [yearRange, setYearRange] = useState([2017, 2025]);
+  const [yearRange, setYearRange] = useState([2018, 2025]);
 
   const data = useMemo(() => {
     return nationalAnnual
@@ -48,7 +48,7 @@ export default function Q1MarketSize() {
     <ReportLayout
       question="Business Question 1"
       title="Market Size & Value Trend"
-      subtitle="Site-built, owner-occupied, single-family home-purchase originations and median property value, 2017–2025."
+      subtitle="Site-built, owner-occupied, single-family home-purchase originations and median property value, 2018–2025."
     >
       <ReportFilters years={FULL_YEARS} yearRange={yearRange} setYearRange={setYearRange} />
 

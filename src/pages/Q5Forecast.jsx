@@ -33,7 +33,7 @@ const tooltipStyle = {
 };
 
 export default function Q5Forecast() {
-  const [yearRange, setYearRange] = useState([2017, 2025]);
+  const [yearRange, setYearRange] = useState([2018, 2025]);
   const [state, setState] = useState(STATES[0].code);
   const [msa, setMsa] = useState(MSAS[0].name);
 
@@ -112,7 +112,7 @@ export default function Q5Forecast() {
         <KpiTile label="Top projected market" value={ranked[0].name} sub={`${ranked[0].cagr}% / yr (2025–28)`} />
       </div>
 
-      <ChartCard title="National Median Value — Actual & Forecast" subtitle="Historical 2017–2025, forecast 2026–2028 (linear regression)">
+      <ChartCard title="National Median Value — Actual & Forecast"         subtitle="Historical 2018–2025, forecast 2026–2028 (linear regression)">
         <div className="h-80 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={nationalForecast} margin={{ top: 10, right: 12, left: 0, bottom: 0 }}>
