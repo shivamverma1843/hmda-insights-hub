@@ -42,16 +42,14 @@ function PbCard({ bq, title, children, className = "" }) {
 export default function PowerBIComparison() {
   const [year, setYear] = useState(2018);
 
-  // 1. YoY % change (all years)
+  // 1. YoY % change (single column for selected year)
   const yoyData = useMemo(() => {
-    const rows = [];
-    for (let i = 1; i < nationalAnnual.length; i++) {
-      const prev = nationalAnnual[i - 1];
-      const cur = nationalAnnual[i];
-      rows.push({ year: cur.year, yoy: +(((cur.medianProperty - prev.medianProperty) / prev.medianProperty) * 100).toFixed(1) });
-    }
-    return rows;
-  }, []);
+    const idx = nationalAnnual.findIndex((n) => n.year === year);
+    if (idx <= 0) return [{ year, yoy: 0 }];
+    const prev = nationalAnnual[idx - 1];
+    const cur = nationalAnnual[idx];
+    return [{ year, yoy: +(((cur.medianProperty - prev.medianProperty) / prev.medianProperty) * 100).toFixed(1) }];
+  }, [year]);
 
   // 2. Median property value by state (selected year), top 8
   const medianByState = useMemo(() => {
@@ -97,6 +95,19 @@ export default function PowerBIComparison() {
       return { year: y, ratio: +(sb / mh).toFixed(2) };
     });
   }, []);
+
+  // 7. Median property value — single point for selected year
+  const trendPoint = useMemo(() => {
+    const n = nationalAnnual.find((x) => x.year === year);
+    return [{ year, value: n.medianProperty }];
+  }, [year]);
+
+  // 9. Site-built premium — single point for selected year
+  const premiumPoint = useMemo(() => {
+    const sb = nationalAnnual.find((n) => n.year === year).medianProperty;
+    const mh = manufacturedAnnual.find((m) => m.year === year).medianProperty;
+    return [{ year, ratio: +(sb / mh).toFixed(2) }];
+  }, [year]);
 
   // 9. Loan denials by year (scatter) — denial count proxy
   const denialsByYear = useMemo(() => {
@@ -234,13 +245,13 @@ export default function PowerBIComparison() {
           <PbCard bq="BQ1" title="Median Property Value Trend">
             <div className="h-44 w-full">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={trendData} margin={{ top: 4, right: 8, left: -16, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#eee" vertical={false} />
-                  <XAxis dataKey="year" tick={{ fontSize: 9, fill: "#666" }} tickLine={false} axisLine={false} />
-                  <YAxis domain={[300000, 500000]} tick={{ fontSize: 9, fill: "#666" }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v / 1000}K`} />
-                  <Tooltip contentStyle={tooltipStyle} formatter={(v) => [fmtUSD(v), "Median"]} />
-                  <Line type="monotone" dataKey="value" stroke="#1a237e" strokeWidth={2} dot={{ r: 3, fill: "#1a237e" }} />
-                </LineChart>
+                <ScatterChart margin={{ top: 4, right: 8, left: -16, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
+                  <XAxis type="number" dataKey="year" domain={[2016, 2026]} tick={{ fontSize: 9, fill: "#666" }} tickLine={false} axisLine={false} />
+                  <YAxis type="number" dataKey="value" domain={[300000, 500000]} tick={{ fontSize: 9, fill: "#666" }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v / 1000}K`} />
+                  <Tooltip contentStyle={tooltipStyle} formatter={(v) => [fmtUSD(v), "Median"]} labelFormatter={(l) => `Year ${l}`} />
+                  <Scatter data={trendPoint} fill="#1a237e" />
+                </ScatterChart>
               </ResponsiveContainer>
             </div>
           </PbCard>
@@ -266,13 +277,13 @@ export default function PowerBIComparison() {
           <PbCard bq="BQ3" title="Site-Built Premium Widening or Narrowing?">
             <div className="h-44 w-full">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={premiumRatio} margin={{ top: 4, right: 8, left: -16, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#eee" vertical={false} />
-                  <XAxis dataKey="year" tick={{ fontSize: 9, fill: "#666" }} tickLine={false} axisLine={false} />
-                  <YAxis domain={[3, 5]} tick={{ fontSize: 9, fill: "#666" }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}x`} />
-                  <Tooltip contentStyle={tooltipStyle} formatter={(v) => [`${v}x`, "Ratio"]} />
-                  <Line type="monotone" dataKey="ratio" stroke="#5c6bc0" strokeWidth={2} dot={{ r: 3, fill: "#5c6bc0" }} />
-                </LineChart>
+                <ScatterChart margin={{ top: 4, right: 8, left: -16, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
+                  <XAxis type="number" dataKey="year" domain={[2016, 2026]} tick={{ fontSize: 9, fill: "#666" }} tickLine={false} axisLine={false} />
+                  <YAxis type="number" dataKey="ratio" domain={[3, 5]} tick={{ fontSize: 9, fill: "#666" }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}x`} />
+                  <Tooltip contentStyle={tooltipStyle} formatter={(v) => [`${v}x`, "Ratio"]} labelFormatter={(l) => `Year ${l}`} />
+                  <Scatter data={premiumPoint} fill="#5c6bc0" />
+                </ScatterChart>
               </ResponsiveContainer>
             </div>
           </PbCard>
