@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Maximize2, MoreHorizontal } from "lucide-react";
+import { ArrowLeft, Maximize2, MoreHorizontal, RotateCcw, Calendar } from "lucide-react";
 import {
   YoYChangeChart,
   TopMSAsCAGRChart,
@@ -62,7 +62,11 @@ export default function InteractiveDashboard() {
             </Link>
             <h1 className="font-sans text-sm font-bold text-[#333]">HMDA Interactive Dashboard</h1>
           </div>
-          <span className="text-xs text-[#999]">All 5 business questions · 2018–2025</span>
+          <div className="flex items-center gap-1.5">
+            <Calendar className="h-3.5 w-3.5 text-[#2C3E50]" />
+            <span className="rounded-md bg-[#2C3E50] px-2 py-0.5 text-xs font-semibold text-white">{year}</span>
+            <span className="hidden text-xs text-[#999] sm:inline">All 5 business questions · 2018–2025</span>
+          </div>
         </div>
       </header>
 
@@ -127,26 +131,27 @@ export default function InteractiveDashboard() {
           <h2 className="mb-3 font-sans text-sm font-bold text-[#333]">Filters</h2>
           <div className="mb-1.5 text-xs font-medium uppercase tracking-wide text-[#999]">activity_year</div>
           <div className="grid grid-cols-2 gap-1.5">
-            <button
-              onClick={() => setYear(YEARS[0])}
-              className={`rounded-md border px-2 py-1.5 text-xs font-medium transition ${
-                false ? "border-[#2C3E50] bg-[#2C3E50] text-white" : "border-black/10 bg-white text-[#666] hover:bg-black/5"
-              }`}
-            >
-              All
-            </button>
             {YEARS.map((y) => (
               <button
                 key={y}
                 onClick={() => setYear(y)}
                 className={`rounded-md border px-2 py-1.5 text-xs font-medium transition ${
-                  y === year ? "border-[#2C3E50] bg-[#2C3E50] text-white" : "border-black/10 bg-white text-[#666] hover:bg-black/5"
+                  y === year
+                    ? "border-[#2C3E50] bg-[#2C3E50] text-white shadow-sm"
+                    : "border-black/10 bg-white text-[#666] hover:border-[#2C3E50]/40 hover:bg-[#2C3E50]/5 hover:text-[#2C3E50]"
                 }`}
               >
                 {y}
               </button>
             ))}
           </div>
+          <button
+            onClick={() => setYear(2025)}
+            className="mt-2 inline-flex items-center justify-center gap-1.5 rounded-md border border-black/10 bg-white px-2 py-1.5 text-xs font-medium text-[#666] transition hover:bg-black/5"
+          >
+            <RotateCcw className="h-3 w-3" />
+            Reset to latest
+          </button>
           <div className="mt-auto flex items-center gap-2 pt-3 text-[#999]">
             <Maximize2 className="h-4 w-4 cursor-pointer hover:text-[#666]" />
             <MoreHorizontal className="h-4 w-4 cursor-pointer hover:text-[#666]" />
