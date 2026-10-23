@@ -18,7 +18,7 @@ import {
 import StateChoropleth from "@/components/dashboard/StateChoropleth";
 import KpiCard from "@/components/dashboard/KpiCard";
 import DashboardSection from "@/components/dashboard/DashboardSection";
-import QnAExplorer from "@/components/dashboard/QnAExplorer";
+import UnifiedDashboard from "@/components/dashboard/UnifiedDashboard";
 import {
   YoYChangeChart,
   TopMSAsCAGRChart,
@@ -282,8 +282,8 @@ export default function CompleteDashboard() {
           </div>
         </DashboardSection>
 
-        {/* Interactive Q&A Explorer */}
-        <QnAExplorer year={year} />
+        {/* Unified Interactive Dashboard */}
+        <UnifiedDashboard year={year} />
 
         <footer className="pt-1 pb-6 text-center text-xs text-muted-foreground">
           Complete dashboard · HMDA market analysis 2018–2025. Upload the FFIEC LAR CSV for real figures.
