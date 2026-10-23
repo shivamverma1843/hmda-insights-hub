@@ -7,7 +7,6 @@ import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
 // Add page imports here
-import Home from "@/pages/Home";
 import Upload from "@/pages/Upload";
 import Reports from "@/pages/Reports";
 import Q1MarketSize from "@/pages/Q1MarketSize";
@@ -15,15 +14,11 @@ import Q2Geography from "@/pages/Q2Geography";
 import Q3SiteBuiltPremium from "@/pages/Q3SiteBuiltPremium";
 import Q4CreditAccess from "@/pages/Q4CreditAccess";
 import Q5Forecast from "@/pages/Q5Forecast";
-import PowerBIComparison from "@/pages/PowerBIComparison";
-import CompleteDashboard from "@/pages/CompleteDashboard";
-import InteractiveDashboard from "@/pages/InteractiveDashboard";
 import UnifiedDashboardPage from "@/pages/UnifiedDashboardPage";
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
 
-  // Show loading spinner while checking app public settings or auth
   if (isLoadingPublicSettings || isLoadingAuth) {
     return (
       <div className="fixed inset-0 flex items-center justify-center">
@@ -32,22 +27,18 @@ const AuthenticatedApp = () => {
     );
   }
 
-  // Handle authentication errors
   if (authError) {
     if (authError.type === 'user_not_registered') {
       return <UserNotRegisteredError />;
     } else if (authError.type === 'auth_required') {
-      // Redirect to login automatically
       navigateToLogin();
       return null;
     }
   }
 
-  // Render the main app
   return (
     <Routes>
-      {/* Add your page Route elements here */}
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<UnifiedDashboardPage />} />
       <Route path="/upload" element={<Upload />} />
       <Route path="/reports" element={<Reports />} />
       <Route path="/reports/q1" element={<Q1MarketSize />} />
@@ -55,18 +46,12 @@ const AuthenticatedApp = () => {
       <Route path="/reports/q3" element={<Q3SiteBuiltPremium />} />
       <Route path="/reports/q4" element={<Q4CreditAccess />} />
       <Route path="/reports/q5" element={<Q5Forecast />} />
-      <Route path="/powerbi" element={<PowerBIComparison />} />
-      <Route path="/dashboard" element={<CompleteDashboard />} />
-      <Route path="/interactive" element={<InteractiveDashboard />} />
-      <Route path="/unified" element={<UnifiedDashboardPage />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };
 
-
 function App() {
-
   return (
     <AuthProvider>
       <QueryClientProvider client={queryClientInstance}>

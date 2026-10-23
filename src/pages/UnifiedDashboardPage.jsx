@@ -1,19 +1,35 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, FileBarChart, Upload as UploadIcon } from "lucide-react";
 import UnifiedDashboard from "@/components/dashboard/UnifiedDashboard";
 
 export default function UnifiedDashboardPage() {
   return (
     <div className="min-h-screen bg-[#f5f5f5]">
-      <div className="mb-1 flex items-center gap-2 px-3 pt-2">
+      <div className="flex items-center justify-between px-3 pt-2">
         <Link
-          to="/interactive"
+          to="/reports"
           className="inline-flex items-center gap-1.5 rounded border border-[#e5e7eb] bg-white px-2 py-1 text-[10px] font-medium text-[#666] transition hover:bg-[#f5f5f5]"
         >
           <ArrowLeft className="h-3 w-3" />
-          Back
+          Reports
         </Link>
+        <div className="flex items-center gap-1.5">
+          <Link
+            to="/reports"
+            className="inline-flex items-center gap-1.5 rounded border border-[#e5e7eb] bg-white px-2 py-1 text-[10px] font-medium text-[#666] transition hover:bg-[#f5f5f5]"
+          >
+            <FileBarChart className="h-3 w-3" />
+            Reports
+          </Link>
+          <Link
+            to="/upload"
+            className="inline-flex items-center gap-1.5 rounded border border-[#e5e7eb] bg-white px-2 py-1 text-[10px] font-medium text-[#666] transition hover:bg-[#f5f5f5]"
+          >
+            <UploadIcon className="h-3 w-3" />
+            Upload
+          </Link>
+        </div>
       </div>
       <UnifiedDashboard />
     </div>

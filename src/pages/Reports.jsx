@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { TrendingUp, Map, GitCompare, CreditCard, LineChart, ArrowRight, LayoutGrid, LayoutDashboard } from "lucide-react";
+import { TrendingUp, Map, GitCompare, CreditCard, LineChart, ArrowRight, LayoutDashboard } from "lucide-react";
 
 const REPORTS = [
   {
@@ -45,20 +45,12 @@ const REPORTS = [
     accent: "bg-violet-50 text-violet-600",
   },
   {
-    to: "/dashboard",
+    to: "/",
     question: "Unified View",
-    title: "Complete Dashboard",
-    desc: "All five business questions in one interactive, scrollable dashboard with a shared year selector.",
+    title: "Unified Dashboard",
+    desc: "All five business questions in one Power BI-style dashboard with a shared year selector.",
     icon: LayoutDashboard,
     accent: "bg-sky-50 text-sky-600",
-  },
-  {
-    to: "/powerbi",
-    question: "Power BI Comparison",
-    title: "Power BI Layout Mirror",
-    desc: "Side-by-side comparison view replicating your Power BI report grid, navy-to-mauve palette, and year-filter cards.",
-    icon: LayoutGrid,
-    accent: "bg-indigo-50 text-indigo-600",
   },
 ];
 
