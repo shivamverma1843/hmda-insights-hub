@@ -92,10 +92,17 @@ export default function Home() {
               </Link>
               <Link
                 to="/dashboard"
-                className="inline-flex items-center gap-1.5 rounded-xl bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground shadow-sm transition hover:bg-primary/90"
+                className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-card px-3 py-1.5 text-xs font-medium text-foreground shadow-sm transition hover:bg-muted"
               >
                 <LayoutDashboard className="h-3.5 w-3.5" />
                 All Charts
+              </Link>
+              <Link
+                to="/interactive"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground shadow-sm transition hover:bg-primary/90"
+              >
+                <LayoutDashboard className="h-3.5 w-3.5" />
+                Interactive
               </Link>
             </div>
           </div>
