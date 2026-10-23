@@ -129,23 +129,6 @@ export default function Home() {
           <KpiCard label="Denial Rate" value={fmtPct(current.denialRate)} delta={delta("denialRate")} icon={XCircle} accent="rose" />
         </motion.div>
 
-        {/* Q1 theory */}
-        <div className="rounded-xl border border-primary/20 bg-primary/5 px-4 py-3">
-          <div className="flex items-start gap-2.5">
-            <FileBarChart className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-            <div>
-              <h3 className="font-display text-sm font-semibold text-foreground">Q1 · Market Size &amp; Value Trend — Theory</h3>
-              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                Mortgage market size is measured by the count and dollar value of originated home-purchase loans each year.
-                Application volume captures demand, originations capture funded supply, and median loan size reflects average ticket value.
-                Together these reveal the cycle: low interest rates expand volume and lift property values, while rising rates compress
-                affordability, reduce originations, and slow value growth. Year-over-year change in originations and median loan size
-                are the primary signals of market expansion or contraction.
-              </p>
-            </div>
-          </div>
-        </div>
-
         {/* Trend charts */}
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           <div className="lg:col-span-2">
