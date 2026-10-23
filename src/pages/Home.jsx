@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FileBarChart, DollarSign, CheckCircle2, XCircle, Percent, Landmark, Upload as UploadIcon, Database, LayoutDashboard } from "lucide-react";
 import KpiCard from "@/components/dashboard/KpiCard";
+import InsightCallout from "@/components/dashboard/InsightCallout";
 import TrendChart, { RateTrendChart, LoanAmountChart } from "@/components/dashboard/TrendChart";
 import {
   LoanPurposeChart,
@@ -130,6 +131,10 @@ export default function Home() {
         </motion.div>
 
         {/* Trend charts */}
+        <InsightCallout icon={FileBarChart} title="Market Size & Value Trend">
+          Application volume captures borrower demand, originations capture funded supply, and median loan size reflects average ticket
+          value. Together they trace the cycle: low rates expand volume and lift values; rising rates compress affordability and slow growth.
+        </InsightCallout>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <TrendChart data={annualMetrics} />
@@ -137,22 +142,38 @@ export default function Home() {
           <RateTrendChart data={annualMetrics} />
         </div>
 
+        <InsightCallout icon={DollarSign} title="Loan Amount & Purpose Mix">
+          Total loan amount combines volume and ticket size, while the purpose mix shows how purchase vs. refinance demand shifts with
+          the rate environment. Refinance share surges when rates fall and fades when they rise.
+        </InsightCallout>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <LoanAmountChart data={annualMetrics} />
           <LoanPurposeChart data={merged.loanPurposeTrend} />
         </div>
 
         {/* Breakdowns */}
+        <InsightCallout icon={CheckCircle2} title="Application Disposition & Loan Type">
+          Disposition tracks how applications resolve — originated, denied, or withdrawn — and the loan-type mix shows conventional vs.
+          government-backed share. A rising denial share signals tightening credit access.
+        </InsightCallout>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <ActionTakenChart data={merged.actionTakenTrend} />
           <LoanTypePie data={merged.loanTypeMix} />
         </div>
 
+        <InsightCallout icon={Percent} title="Credit Access by Race / Ethnicity">
+          Denial rates differ materially across applicant groups, reflecting differences in credit profiles, DTI, and loan product.
+          Monitoring these gaps is central to fair-lending analysis under HMDA.
+        </InsightCallout>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <RaceEthnicityChart data={merged.raceEthnicity} />
           <DenialByRaceChart data={merged.denialByRace} />
         </div>
 
+        <InsightCallout icon={Landmark} title="Top Lenders & Year Snapshot">
+          Lender concentration shows how market share distributes across originators, while the snapshot summarizes headline metrics for
+          the selected year — useful for quick comparison against prior years.
+        </InsightCallout>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <TopLendersChart data={merged.topLenders} />
           <SummaryPanel year={year} current={current} />
