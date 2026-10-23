@@ -51,7 +51,9 @@ export function YoYChangeChart({ data }) {
             <XAxis dataKey="year" tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} />
             <YAxis tickFormatter={(v) => `${v}%`} tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} />
             <Tooltip contentStyle={CD_TOOLTIP} formatter={(v) => [`${v}%`, "YoY change"]} labelFormatter={(l) => `${l}`} />
-            <Bar dataKey="change" name="YoY change" radius={[5, 5, 0, 0]} fill="url(#yoyGrad)" />
+            <Bar dataKey="change" name="YoY change" radius={[5, 5, 0, 0]} fill="url(#yoyGrad)">
+              <LabelList dataKey="change" position="top" formatter={(v) => `${v}%`} style={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} />
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -77,7 +79,9 @@ export function TopMSAsCAGRChart({ msas }) {
             <XAxis type="number" tickFormatter={(v) => `${v}%`} tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} />
             <YAxis type="category" dataKey="name" width={140} tickLine={false} axisLine={false} tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} />
             <Tooltip contentStyle={CD_TOOLTIP} formatter={(v) => [`${v}%`, "CAGR"]} />
-            <Bar dataKey="cagr" name="CAGR" radius={[0, 5, 5, 0]} fill="url(#msaGrad)" />
+            <Bar dataKey="cagr" name="CAGR" radius={[0, 5, 5, 0]} fill="url(#msaGrad)">
+              <LabelList dataKey="cagr" position="right" formatter={(v) => `${v}%`} style={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} />
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -321,7 +325,9 @@ export function FastestGrowingMarketsChart({ states }) {
             <XAxis type="number" tickFormatter={(v) => `${v}%`} tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} />
             <YAxis type="category" dataKey="name" width={40} tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} />
             <Tooltip contentStyle={CD_TOOLTIP} formatter={(v) => [`${v}%`, "CAGR"]} />
-            <Bar dataKey="cagr" name="CAGR" radius={[0, 5, 5, 0]} fill="url(#fastGrad)" />
+            <Bar dataKey="cagr" name="CAGR" radius={[0, 5, 5, 0]} fill="url(#fastGrad)">
+              <LabelList dataKey="cagr" position="right" formatter={(v) => `${v}%`} style={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} />
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -340,7 +346,9 @@ export function OriginationsByYearChart({ data }) {
             <XAxis dataKey="year" tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} />
             <YAxis tickFormatter={(v) => fmtNum(v)} tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} />
             <Tooltip contentStyle={CD_TOOLTIP} formatter={(v) => [fmtNum(v), "Originations"]} labelFormatter={(l) => `Year ${l}`} />
-            <Bar dataKey="originations" name="Originations" radius={[5, 5, 0, 0]} fill="#6366f1" />
+            <Bar dataKey="originations" name="Originations" radius={[5, 5, 0, 0]} fill="#6366f1">
+              <LabelList dataKey="originations" position="top" formatter={(v) => fmtNum(v)} style={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} />
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </div>
