@@ -18,6 +18,7 @@ import Q5Forecast from "@/pages/Q5Forecast";
 import PowerBIComparison from "@/pages/PowerBIComparison";
 import CompleteDashboard from "@/pages/CompleteDashboard";
 import InteractiveDashboard from "@/pages/InteractiveDashboard";
+import UnifiedDashboardPage from "@/pages/UnifiedDashboardPage";
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -57,6 +58,7 @@ const AuthenticatedApp = () => {
       <Route path="/powerbi" element={<PowerBIComparison />} />
       <Route path="/dashboard" element={<CompleteDashboard />} />
       <Route path="/interactive" element={<InteractiveDashboard />} />
+      <Route path="/unified" element={<UnifiedDashboardPage />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

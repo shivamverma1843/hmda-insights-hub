@@ -18,7 +18,6 @@ import {
   DenialTrendTop5Chart,
 } from "@/components/dashboard/CompleteDashboardCharts";
 import StateChoropleth from "@/components/dashboard/StateChoropleth";
-import UnifiedDashboard from "@/components/dashboard/UnifiedDashboard";
 import { nationalAnnual, manufacturedAnnual, STATES, MSAS, forecastValues, fmtUSD } from "@/data/hmdaMarket";
 
 const YEARS = [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025];
@@ -197,10 +196,6 @@ export default function InteractiveDashboard() {
             </div>
             <MSAForecastChart msa={activeMsa} forecast={msaForecast} />
           </div>
-
-          {/* Unified Dashboard */}
-          <SectionHeader n={6} title="Unified Dashboard · All Questions" />
-          <UnifiedDashboard year={year} />
         </main>
 
         {/* Right Filters sidebar */}

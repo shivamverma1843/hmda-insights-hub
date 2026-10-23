@@ -104,6 +104,13 @@ export default function Home() {
                 <LayoutDashboard className="h-3.5 w-3.5" />
                 Dashboard
               </Link>
+              <Link
+                to="/unified"
+                className="inline-flex items-center gap-1.5 rounded-xl border border-primary bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary shadow-sm transition hover:bg-primary/20"
+              >
+                <LayoutDashboard className="h-3.5 w-3.5" />
+                Unified
+              </Link>
             </div>
           </div>
         </div>
