@@ -153,6 +153,13 @@ export default function CompleteDashboard() {
                 </button>
               );
             })}
+            <Link
+              to="/"
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-medium text-foreground shadow-sm transition hover:bg-muted"
+            >
+              <LayoutDashboard className="h-3.5 w-3.5" />
+              Dashboard
+            </Link>
           </div>
         </div>
       </header>
