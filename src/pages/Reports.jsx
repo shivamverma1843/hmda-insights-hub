@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { TrendingUp, Map, GitCompare, CreditCard, LineChart, ArrowRight, LayoutGrid } from "lucide-react";
+import { TrendingUp, Map, GitCompare, CreditCard, LineChart, ArrowRight, LayoutGrid, LayoutDashboard } from "lucide-react";
 
 const REPORTS = [
   {
@@ -43,6 +43,14 @@ const REPORTS = [
     desc: "Linear-regression forecast of median values for 2026–2028 at national, state, and MSA level, with market rankings.",
     icon: LineChart,
     accent: "bg-violet-50 text-violet-600",
+  },
+  {
+    to: "/dashboard",
+    question: "Unified View",
+    title: "Complete Dashboard",
+    desc: "All five business questions in one interactive, scrollable dashboard with a shared year selector.",
+    icon: LayoutDashboard,
+    accent: "bg-sky-50 text-sky-600",
   },
   {
     to: "/powerbi",
