@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FileBarChart, DollarSign, CheckCircle2, XCircle, Percent, Landmark, Upload as UploadIcon, Database } from "lucide-react";
+import { FileBarChart, DollarSign, CheckCircle2, XCircle, Percent, Landmark, Upload as UploadIcon, Database, LayoutDashboard } from "lucide-react";
 import KpiCard from "@/components/dashboard/KpiCard";
 import TrendChart, { RateTrendChart, LoanAmountChart } from "@/components/dashboard/TrendChart";
 import {
@@ -88,6 +88,13 @@ export default function Home() {
               >
                 <UploadIcon className="h-3.5 w-3.5" />
                 Upload
+              </Link>
+              <Link
+                to="/dashboard"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground shadow-sm transition hover:bg-primary/90"
+              >
+                <LayoutDashboard className="h-3.5 w-3.5" />
+                All Charts
               </Link>
             </div>
           </div>

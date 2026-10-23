@@ -16,6 +16,7 @@ import Q3SiteBuiltPremium from "@/pages/Q3SiteBuiltPremium";
 import Q4CreditAccess from "@/pages/Q4CreditAccess";
 import Q5Forecast from "@/pages/Q5Forecast";
 import PowerBIComparison from "@/pages/PowerBIComparison";
+import CompleteDashboard from "@/pages/CompleteDashboard";
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -53,6 +54,7 @@ const AuthenticatedApp = () => {
       <Route path="/reports/q4" element={<Q4CreditAccess />} />
       <Route path="/reports/q5" element={<Q5Forecast />} />
       <Route path="/powerbi" element={<PowerBIComparison />} />
+      <Route path="/dashboard" element={<CompleteDashboard />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
