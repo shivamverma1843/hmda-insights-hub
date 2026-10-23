@@ -22,6 +22,15 @@ import { nationalAnnual, manufacturedAnnual, STATES, MSAS, forecastValues, fmtUS
 
 const YEARS = [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025];
 
+function SectionHeader({ n, title }) {
+  return (
+    <div className="flex items-center gap-2 pt-2">
+      <span className="flex h-6 w-6 items-center justify-center rounded-md bg-[#2C3E50] text-xs font-bold text-white">{n}</span>
+      <h2 className="font-sans text-sm font-bold text-[#333]">{title}</h2>
+    </div>
+  );
+}
+
 function YearKpiStrip({ year }) {
   const cur = nationalAnnual.find((n) => n.year === year) ?? nationalAnnual[nationalAnnual.length - 1];
   const mfg = manufacturedAnnual.find((m) => m.year === year);
@@ -125,38 +134,48 @@ export default function InteractiveDashboard() {
           {/* Selected-year KPI strip */}
           <YearKpiStrip year={year} />
 
-          {/* Row 1 */}
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
+          {/* Q1 — Market Size */}
+          <SectionHeader n={1} title="Business Question 1 · Market Size" />
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
             <YoYChangeChart data={nationalAnnual} />
+            <MedianValueTrendChart data={nationalAnnual} />
+            <OriginationsByYearChart data={nationalAnnual} />
+          </div>
+
+          {/* Q2 — Geography */}
+          <SectionHeader n={2} title="Business Question 2 · Geography" />
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
             <TopMSAsCAGRChart msas={MSAS} />
             <AvgLoanByStateChart states={STATES} year={year} />
-            <SiteBuiltVsManufacturedLine siteBuilt={nationalAnnual} manufactured={manufacturedAnnual} />
-            <DenialVsGrowthChart states={STATES} year={year} />
-          </div>
-
-          {/* Row 2 */}
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">
-            <MedianValueTrendChart data={nationalAnnual} />
             <VolumeVsGrowthScatter states={STATES} year={year} />
-            <ManufacturedValueChart data={manufacturedAnnual} />
-            <Top5MarketsGrowthChart msas={MSAS} />
-            <NationalForecastLine actual={nationalAnnual} forecast={nationalForecast} />
-            <MSAForecastChart msa={activeMsa} forecast={msaForecast} />
+          </div>
+          <div className="rounded-xl border border-black/5 bg-white p-4 shadow-sm">
+            <h3 className="font-sans text-sm font-bold text-[#333]">Choropleth: Median Property Value</h3>
+            <p className="mb-2 text-xs text-[#999]">{`State median values · ${year}`}</p>
+            <StateChoropleth valueByState={stateValueByYear} metricLabel="Median property value" format={fmtUSD} />
           </div>
 
-          {/* Row 3 */}
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
-            <FastestGrowingMarketsChart states={STATES} />
-            <OriginationsByYearChart data={nationalAnnual} />
-            <div className="rounded-xl border border-black/5 bg-white p-4 shadow-sm">
-              <h3 className="font-sans text-sm font-bold text-[#333]">Choropleth: Median Property Value</h3>
-              <p className="mb-2 text-xs text-[#999]">{`State median values · ${year}`}</p>
-              <StateChoropleth valueByState={stateValueByYear} metricLabel="Median property value" format={fmtUSD} />
-            </div>
+          {/* Q3 — Site-Built vs Manufactured */}
+          <SectionHeader n={3} title="Business Question 3 · Site-Built vs Manufactured" />
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+            <SiteBuiltVsManufacturedLine siteBuilt={nationalAnnual} manufactured={manufacturedAnnual} />
+            <ManufacturedValueChart data={manufacturedAnnual} />
+          </div>
+
+          {/* Q4 — Credit Access */}
+          <SectionHeader n={4} title="Business Question 4 · Credit Access" />
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+            <DenialVsGrowthChart states={STATES} year={year} />
             <DenialTrendTop5Chart states={STATES} />
           </div>
 
-          {/* MSA selector for forecast */}
+          {/* Q5 — Forecast */}
+          <SectionHeader n={5} title="Business Question 5 · Forecast" />
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
+            <NationalForecastLine actual={nationalAnnual} forecast={nationalForecast} />
+            <FastestGrowingMarketsChart states={STATES} />
+            <Top5MarketsGrowthChart msas={MSAS} />
+          </div>
           <div className="rounded-xl border border-black/5 bg-white p-4 shadow-sm">
             <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
               <div>
@@ -175,6 +194,7 @@ export default function InteractiveDashboard() {
                 ))}
               </select>
             </div>
+            <MSAForecastChart msa={activeMsa} forecast={msaForecast} />
           </div>
         </main>
 
