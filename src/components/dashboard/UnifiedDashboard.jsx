@@ -31,6 +31,7 @@ import {
   Landmark,
 } from "lucide-react";
 import { nationalAnnual, manufacturedAnnual, STATES, MSAS, forecastValues, FULL_YEARS, fmtUSD, fmtNum } from "@/data/hmdaMarket";
+import StateChoropleth from "@/components/dashboard/StateChoropleth";
 
 // Power BI navy-to-mauve palette
 const PB = ["#1a237e", "#283593", "#3949ab", "#5c6bc0", "#7986cb", "#9fa8da", "#c5cae9", "#e1bee7"];
@@ -124,6 +125,14 @@ export default function UnifiedDashboard({ year: initialYear }) {
     () => [...STATES].map((s) => ({ name: s.code, value: s.values[year] })).sort((a, b) => b.value - a.value).slice(0, 12),
     [year]
   );
+
+  const choroplethByState = useMemo(() => {
+    const map = {};
+    STATES.forEach((s) => {
+      map[s.name] = s.values[year];
+    });
+    return map;
+  }, [year]);
 
   const volumeVsGrowth = useMemo(
     () =>
@@ -360,6 +369,10 @@ export default function UnifiedDashboard({ year: initialYear }) {
             </div>
           </PbCard>
         </div>
+
+        <PbCard bq="Q2" title="Choropleth: Median Property Value" subtitle={`State median value · ${year}`} className="lg:col-span-4">
+          <StateChoropleth valueByState={choroplethByState} metricLabel="Median value" format={fmtUSD} />
+        </PbCard>
 
         {/* BQ3 — Site-Built Premium */}
         <div className="flex items-center gap-1.5 pt-1">
