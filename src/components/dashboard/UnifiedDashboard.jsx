@@ -31,7 +31,7 @@ import {
   Landmark,
 } from "lucide-react";
 import { nationalAnnual, manufacturedAnnual, STATES, MSAS, forecastValues, FULL_YEARS, fmtUSD, fmtNum } from "@/data/hmdaMarket";
-import StateChoropleth from "@/components/dashboard/StateChoropleth";
+import ChoroplethCard from "@/components/dashboard/ChoroplethCard";
 
 // Power BI navy-to-mauve palette
 const PB = ["#1a237e", "#283593", "#3949ab", "#5c6bc0", "#7986cb", "#9fa8da", "#c5cae9", "#e1bee7"];
@@ -370,18 +370,7 @@ export default function UnifiedDashboard({ year: initialYear }) {
           </PbCard>
         </div>
 
-        <div className="flex flex-col overflow-visible rounded-md border border-[#e5e7eb] bg-white shadow-sm lg:col-span-4">
-          <div className="border-b border-[#f0f0f0] px-2.5 py-1.5">
-            <div className="flex items-center gap-1.5">
-              <span className="rounded bg-[#283593] px-1 py-0.5 text-[8px] font-bold uppercase tracking-wide text-white">Q2</span>
-              <p className="truncate text-[11px] font-semibold text-[#333]">Choropleth: Median Property Value</p>
-            </div>
-            <p className="mt-0.5 truncate text-[9px] text-[#999]">State median value · {year}</p>
-          </div>
-          <div className="p-1.5">
-            <StateChoropleth valueByState={choroplethByState} metricLabel="Median value" format={fmtUSD} />
-          </div>
-        </div>
+        <ChoroplethCard valueByState={choroplethByState} year={year} />
 
         {/* BQ3 — Site-Built Premium */}
         <div className="flex items-center gap-1.5 pt-1">
