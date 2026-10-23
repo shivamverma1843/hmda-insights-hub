@@ -22,6 +22,32 @@ import { nationalAnnual, manufacturedAnnual, STATES, MSAS, forecastValues, fmtUS
 
 const YEARS = [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025];
 
+function YearKpiStrip({ year }) {
+  const cur = nationalAnnual.find((n) => n.year === year) ?? nationalAnnual[nationalAnnual.length - 1];
+  const mfg = manufacturedAnnual.find((m) => m.year === year);
+  const topState = STATES[0];
+  const topMsa = MSAS[0];
+  const items = [
+    { label: "Median Property Value", value: fmtUSD(cur.medianProperty) },
+    { label: "Originations", value: cur.originations?.toLocaleString() },
+    { label: "Denial Rate", value: `${cur.denialRate}%` },
+    { label: "Median Rate", value: `${cur.medianRate}%` },
+    { label: "Manufactured Median", value: fmtUSD(mfg?.medianProperty) },
+    { label: "Top State CAGR", value: `${topState?.cagr}%`, sub: topState?.name },
+  ];
+  return (
+    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+      {items.map((it) => (
+        <div key={it.label} className="rounded-lg border border-black/5 bg-white p-2.5 shadow-sm">
+          <div className="text-[10px] uppercase tracking-wide text-[#999]">{it.label}</div>
+          <div className="mt-0.5 text-sm font-bold text-[#333]">{it.value}</div>
+          {it.sub && <div className="text-[10px] text-[#999]">{it.sub}</div>}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function InteractiveDashboard() {
   const [year, setYear] = useState(2025);
   const [selectedMsa, setSelectedMsa] = useState(MSAS[0]?.name ?? "");
@@ -73,6 +99,32 @@ export default function InteractiveDashboard() {
       <div className="flex">
         {/* Main grid */}
         <main className="min-w-0 flex-1 space-y-3 p-3 sm:p-4">
+          {/* Year selector bar — always visible */}
+          <div className="flex flex-wrap items-center gap-2 rounded-xl border border-black/5 bg-white p-3 shadow-sm">
+            <span className="text-xs font-semibold uppercase tracking-wide text-[#999]">Select Year</span>
+            <div className="flex flex-wrap gap-1.5">
+              {YEARS.map((y) => (
+                <button
+                  key={y}
+                  onClick={() => setYear(y)}
+                  className={`rounded-md border px-3 py-1.5 text-xs font-semibold transition ${
+                    y === year
+                      ? "border-[#2C3E50] bg-[#2C3E50] text-white shadow-sm"
+                      : "border-black/10 bg-white text-[#666] hover:border-[#2C3E50]/40 hover:bg-[#2C3E50]/5 hover:text-[#2C3E50]"
+                  }`}
+                >
+                  {y}
+                </button>
+              ))}
+            </div>
+            <span className="ml-auto rounded-md bg-[#2C3E50]/10 px-2 py-1 text-xs font-semibold text-[#2C3E50]">
+              Showing results for {year}
+            </span>
+          </div>
+
+          {/* Selected-year KPI strip */}
+          <YearKpiStrip year={year} />
+
           {/* Row 1 */}
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
             <YoYChangeChart data={nationalAnnual} />
