@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, LayoutDashboard } from "lucide-react";
 import InvestmentSummary from "@/components/dashboard/InvestmentSummary";
 import DenialRateEvidence from "@/components/dashboard/DenialRateEvidence";
+import AffordabilityScorecard from "@/components/dashboard/AffordabilityScorecard";
 
 export default function InvestmentSummaryPage() {
   return (
@@ -25,6 +26,7 @@ export default function InvestmentSummaryPage() {
 
       <main className="mx-auto max-w-5xl p-3">
         <InvestmentSummary />
+        <AffordabilityScorecard />
         <DenialRateEvidence />
       </main>
     </div>
