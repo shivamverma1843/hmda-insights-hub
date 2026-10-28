@@ -108,6 +108,20 @@ export default function DenialRateEvidence() {
         💡 <b>Key idea:</b> When fewer buyers get rejected for mortgages (low denial rate), more people can buy homes → demand rises → prices grow faster. Let's see if the data supports this.
       </p>
 
+      {/* What these charts show */}
+      <div className="rounded-md border border-[#e5e7eb] bg-white p-2 text-[10px] leading-relaxed text-[#333]">
+        <p className="mb-1 font-bold text-[#1a237e]">📖 What these charts show</p>
+        <p className="mb-1">
+          A <b>denial rate</b> is the percentage of mortgage applications that lenders reject. A high denial rate means many hopeful buyers are turned away — so fewer homes get sold and prices rise more slowly. A low denial rate means buyers can actually get loans — so demand is strong and prices climb faster.
+        </p>
+        <p className="mb-1">
+          <b>Chart 1</b> shows the 5 fastest-growing states. Notice their denial rates are all low (green bars) — credit flows easily there. <b>Chart 2</b> shows the 5 slowest-growing states. Their denial rates are higher (red bars) — buyers struggle to qualify, so demand stays weak.
+        </p>
+        <p className="mb-1">
+          <b>Chart 3</b> ranks all states from hardest to easiest to get a loan. <b>Chart 4</b> plots every state as a dot — as you move right (easier credit), the dots move up (more growth). That upward slope is the evidence: <b>where credit flows, growth follows</b>.
+        </p>
+      </div>
+
       {/* Chart 1: Denial rate trend in fast-growing states (simplified) */}
       <EvidenceCard
         title="Chart 1 — Denial rates in the 5 FASTEST-growing states (2025)"
