@@ -32,6 +32,7 @@ import {
 } from "lucide-react";
 import { nationalAnnual, manufacturedAnnual, STATES, MSAS, forecastValues, FULL_YEARS, fmtUSD, fmtNum } from "@/data/hmdaMarket";
 import ChoroplethCard from "@/components/dashboard/ChoroplethCard";
+import InvestmentInsights from "@/components/dashboard/InvestmentInsights";
 
 // Power BI navy-to-mauve palette
 const PB = ["#1a237e", "#283593", "#3949ab", "#5c6bc0", "#7986cb", "#9fa8da", "#c5cae9", "#e1bee7"];
@@ -249,6 +250,9 @@ export default function UnifiedDashboard({ year: initialYear }) {
           <PbKpi label="Top MSA CAGR" value={`${MSAS[0]?.cagr}%`} icon={Landmark} accent="#5c6bc0" />
           <PbKpi label="Avg Loan" value={fmtUSD(Math.round((current.originations * current.medianProperty) / current.originations))} icon={DollarSign} accent="#1a237e" />
         </div>
+
+        {/* Investment Insights */}
+        <InvestmentInsights />
 
         {/* BQ1 — Market Size */}
         <div className="flex items-center gap-1.5 pt-1">
