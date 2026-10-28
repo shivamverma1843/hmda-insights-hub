@@ -45,33 +45,13 @@ export default function DenialRateEvidence() {
   const top5 = useMemo(() => STATES.slice(0, 5), []);
   const bottom5 = useMemo(() => [...STATES].sort((a, b) => a.cagr - b.cagr).slice(0, 5), []);
 
-  const trendData = useMemo(
-    () =>
-      FULL_YEARS.map((y) => {
-        const r = { year: y };
-        top5.forEach((s) => (r[s.code] = s.denial[y]));
-        return r;
-      }),
-    [top5]
-  );
-
-  const trendDataBottom = useMemo(
-    () =>
-      FULL_YEARS.map((y) => {
-        const r = { year: y };
-        bottom5.forEach((s) => (r[s.code] = s.denial[y]));
-        return r;
-      }),
-    [bottom5]
-  );
-
   // 2. Highest vs lowest denial rates (2025)
   const denialRanked = useMemo(
     () =>
       [...STATES]
         .sort((a, b) => b.denial[2025] - a.denial[2025])
         .slice(0, 8)
-        .map((s) => ({ name: s.code, denial: s.denial[2025], cagr: s.cagr })),
+        .map((s) => ({ name: s.name, denial: s.denial[2025], cagr: s.cagr })),
     []
   );
 
@@ -80,7 +60,7 @@ export default function DenialRateEvidence() {
       [...STATES]
         .sort((a, b) => a.denial[2025] - b.denial[2025])
         .slice(0, 8)
-        .map((s) => ({ name: s.code, denial: s.denial[2025], cagr: s.cagr })),
+        .map((s) => ({ name: s.name, denial: s.denial[2025], cagr: s.cagr })),
     []
   );
 
@@ -88,7 +68,7 @@ export default function DenialRateEvidence() {
   const scatterData = useMemo(
     () =>
       STATES.map((s) => ({
-        name: s.code,
+        name: s.name,
         denial: s.denial[2025],
         growth: +(((s.values[2025] - s.values[2018]) / s.values[2018]) * 100).toFixed(1),
       })),
@@ -130,9 +110,9 @@ export default function DenialRateEvidence() {
       >
         <div className="h-40 w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={top5.map((s) => ({ name: s.code, denial: s.denial[2025], growth: s.cagr }))} margin={{ top: 4, right: 8, left: -18, bottom: 0 }}>
+            <BarChart data={top5.map((s) => ({ name: s.name, denial: s.denial[2025], growth: s.cagr }))} margin={{ top: 4, right: 8, left: -10, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#eee" vertical={false} />
-              <XAxis dataKey="name" tick={{ fontSize: 10, fill: "#666" }} tickLine={false} axisLine={false} />
+              <XAxis dataKey="name" tick={{ fontSize: 8, fill: "#666" }} tickLine={false} axisLine={false} angle={-15} textAnchor="end" height={40} interval={0} />
               <YAxis tick={{ fontSize: 9, fill: "#666" }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}%`} domain={[0, 14]} />
               <Tooltip contentStyle={TT} formatter={(v, n) => [n === "denial" ? `${v}%` : `${v}%/yr`, n === "denial" ? "Denial rate" : "Growth/yr"]} />
               <Bar dataKey="denial" radius={[3, 3, 0, 0]} fill="#16a34a">
@@ -153,9 +133,9 @@ export default function DenialRateEvidence() {
       >
         <div className="h-40 w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={bottom5.map((s) => ({ name: s.code, denial: s.denial[2025], growth: s.cagr }))} margin={{ top: 4, right: 8, left: -18, bottom: 0 }}>
+            <BarChart data={bottom5.map((s) => ({ name: s.name, denial: s.denial[2025], growth: s.cagr }))} margin={{ top: 4, right: 8, left: -10, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#eee" vertical={false} />
-              <XAxis dataKey="name" tick={{ fontSize: 10, fill: "#666" }} tickLine={false} axisLine={false} />
+              <XAxis dataKey="name" tick={{ fontSize: 8, fill: "#666" }} tickLine={false} axisLine={false} angle={-15} textAnchor="end" height={40} interval={0} />
               <YAxis tick={{ fontSize: 9, fill: "#666" }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}%`} domain={[0, 14]} />
               <Tooltip contentStyle={TT} formatter={(v, n) => [n === "denial" ? `${v}%` : `${v}%/yr`, n === "denial" ? "Denial rate" : "Growth/yr"]} />
               <Bar dataKey="denial" radius={[3, 3, 0, 0]} fill="#dc2626">
@@ -179,7 +159,7 @@ export default function DenialRateEvidence() {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={denialRanked} margin={{ top: 2, right: 4, left: -18, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#eee" vertical={false} />
-                <XAxis dataKey="name" tick={{ fontSize: 8, fill: "#666" }} tickLine={false} axisLine={false} />
+                <XAxis dataKey="name" tick={{ fontSize: 7, fill: "#666" }} tickLine={false} axisLine={false} angle={-25} textAnchor="end" height={48} interval={0} />
                 <YAxis tick={{ fontSize: 8, fill: "#666" }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}%`} />
                 <Tooltip contentStyle={TT} formatter={(v) => [`${v}%`, "Denial"]} />
                 <Bar dataKey="denial" radius={[2, 2, 0, 0]} fill="#dc2626" />
@@ -197,7 +177,7 @@ export default function DenialRateEvidence() {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={lowestDenial} margin={{ top: 2, right: 4, left: -18, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#eee" vertical={false} />
-                <XAxis dataKey="name" tick={{ fontSize: 8, fill: "#666" }} tickLine={false} axisLine={false} />
+                <XAxis dataKey="name" tick={{ fontSize: 7, fill: "#666" }} tickLine={false} axisLine={false} angle={-25} textAnchor="end" height={48} interval={0} />
                 <YAxis tick={{ fontSize: 8, fill: "#666" }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}%`} />
                 <Tooltip contentStyle={TT} formatter={(v) => [`${v}%`, "Denial"]} />
                 <Bar dataKey="denial" radius={[2, 2, 0, 0]} fill="#16a34a" />
