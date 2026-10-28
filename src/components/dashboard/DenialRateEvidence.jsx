@@ -108,46 +108,48 @@ export default function DenialRateEvidence() {
         💡 <b>Key idea:</b> When fewer buyers get rejected for mortgages (low denial rate), more people can buy homes → demand rises → prices grow faster. Let's see if the data supports this.
       </p>
 
-      {/* Chart 1: Denial rate trend in fast-growing states */}
+      {/* Chart 1: Denial rate trend in fast-growing states (simplified) */}
       <EvidenceCard
-        title="Chart 1 — Denial rates in the 5 FASTEST-growing states"
+        title="Chart 1 — Denial rates in the 5 FASTEST-growing states (2025)"
         subtitle="Lower bars = easier to get a loan"
         takeaway="All top-growth states kept denial rates under 10% — buyers could actually get mortgages."
       >
         <div className="h-40 w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={trendData} margin={{ top: 4, right: 8, left: -18, bottom: 0 }}>
+            <BarChart data={top5.map((s) => ({ name: s.code, denial: s.denial[2025], growth: s.cagr }))} margin={{ top: 4, right: 8, left: -18, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#eee" vertical={false} />
-              <XAxis dataKey="year" tick={{ fontSize: 9, fill: "#666" }} tickLine={false} axisLine={false} />
-              <YAxis tick={{ fontSize: 9, fill: "#666" }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}%`} />
-              <Tooltip contentStyle={TT} formatter={(v) => [`${v}%`]} labelFormatter={(l) => `Year ${l}`} />
-              <Legend wrapperStyle={{ fontSize: 9 }} />
-              {top5.map((s, i) => (
-                <Line key={s.code} type="monotone" dataKey={s.code} stroke={i === 0 ? "#16a34a" : ["#16a34a", "#22c55e", "#4ade80", "#86efac", "#bbf7d0"][i]} strokeWidth={i === 0 ? 2.5 : 1.5} dot={{ r: 2 }} />
-              ))}
-            </LineChart>
+              <XAxis dataKey="name" tick={{ fontSize: 10, fill: "#666" }} tickLine={false} axisLine={false} />
+              <YAxis tick={{ fontSize: 9, fill: "#666" }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}%`} domain={[0, 14]} />
+              <Tooltip contentStyle={TT} formatter={(v, n) => [n === "denial" ? `${v}%` : `${v}%/yr`, n === "denial" ? "Denial rate" : "Growth/yr"]} />
+              <Bar dataKey="denial" radius={[3, 3, 0, 0]} fill="#16a34a">
+                {top5.map((_, i) => (
+                  <Cell key={i} fill={i === 0 ? "#16a34a" : ["#22c55e", "#4ade80", "#86efac", "#bbf7d0"][i % 4]} />
+                ))}
+              </Bar>
+            </BarChart>
           </ResponsiveContainer>
         </div>
       </EvidenceCard>
 
-      {/* Chart 2: Denial rate trend in slow-growing states */}
+      {/* Chart 2: Denial rate trend in slow-growing states (simplified) */}
       <EvidenceCard
-        title="Chart 2 — Denial rates in the 5 SLOWEST-growing states"
+        title="Chart 2 — Denial rates in the 5 SLOWEST-growing states (2025)"
         subtitle="Higher bars = harder to get a loan"
         takeaway="Slow-growth states have higher denial rates — fewer buyers qualify, so demand stays weak."
       >
         <div className="h-40 w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={trendDataBottom} margin={{ top: 4, right: 8, left: -18, bottom: 0 }}>
+            <BarChart data={bottom5.map((s) => ({ name: s.code, denial: s.denial[2025], growth: s.cagr }))} margin={{ top: 4, right: 8, left: -18, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#eee" vertical={false} />
-              <XAxis dataKey="year" tick={{ fontSize: 9, fill: "#666" }} tickLine={false} axisLine={false} />
-              <YAxis tick={{ fontSize: 9, fill: "#666" }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}%`} />
-              <Tooltip contentStyle={TT} formatter={(v) => [`${v}%`]} labelFormatter={(l) => `Year ${l}`} />
-              <Legend wrapperStyle={{ fontSize: 9 }} />
-              {bottom5.map((s, i) => (
-                <Line key={s.code} type="monotone" dataKey={s.code} stroke={["#dc2626", "#ef4444", "#f87171", "#fca5a5", "#fecaca"][i]} strokeWidth={i === 0 ? 2.5 : 1.5} dot={{ r: 2 }} />
-              ))}
-            </LineChart>
+              <XAxis dataKey="name" tick={{ fontSize: 10, fill: "#666" }} tickLine={false} axisLine={false} />
+              <YAxis tick={{ fontSize: 9, fill: "#666" }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}%`} domain={[0, 14]} />
+              <Tooltip contentStyle={TT} formatter={(v, n) => [n === "denial" ? `${v}%` : `${v}%/yr`, n === "denial" ? "Denial rate" : "Growth/yr"]} />
+              <Bar dataKey="denial" radius={[3, 3, 0, 0]} fill="#dc2626">
+                {bottom5.map((_, i) => (
+                  <Cell key={i} fill={i === 0 ? "#dc2626" : ["#ef4444", "#f87171", "#fca5a5", "#fecaca"][i % 4]} />
+                ))}
+              </Bar>
+            </BarChart>
           </ResponsiveContainer>
         </div>
       </EvidenceCard>
