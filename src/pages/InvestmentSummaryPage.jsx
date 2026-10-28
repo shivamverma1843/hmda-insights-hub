@@ -27,9 +27,9 @@ export default function InvestmentSummaryPage() {
 
       <main className="mx-auto max-w-5xl p-3">
         <InvestmentSummary />
+        <DenialRateEvidence />
         <AffordabilityScorecard />
         <InvestorVsOwnerChart />
-        <DenialRateEvidence />
       </main>
     </div>
   );
