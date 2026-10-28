@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, FileBarChart, Upload as UploadIcon, Maximize2, Minimize2 } from "lucide-react";
+import { ArrowLeft, FileBarChart, Upload as UploadIcon, Maximize2, Minimize2, Scale } from "lucide-react";
 import UnifiedDashboard from "@/components/dashboard/UnifiedDashboard";
 
 export default function UnifiedDashboardPage() {
@@ -30,6 +30,13 @@ export default function UnifiedDashboardPage() {
           >
             <UploadIcon className="h-3 w-3" />
             Upload
+          </Link>
+          <Link
+            to="/investment-summary"
+            className="inline-flex items-center gap-1.5 rounded border border-[#1a237e] bg-[#1a237e] px-2 py-1 text-[10px] font-medium text-white transition hover:bg-[#283593]"
+          >
+            <Scale className="h-3 w-3" />
+            Invest vs. Avoid
           </Link>
           <button
             onClick={() => setFullscreen((v) => !v)}
