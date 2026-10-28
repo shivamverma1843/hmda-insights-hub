@@ -5,11 +5,8 @@ import {
   Bar,
   LineChart,
   Line,
-  ScatterChart,
-  Scatter,
   XAxis,
   YAxis,
-  ZAxis,
   CartesianGrid,
   Tooltip,
   Legend,
@@ -65,23 +62,6 @@ export default function DenialRateEvidence() {
     []
   );
 
-  // 3. Scatter: denial rate vs value growth
-  const scatterData = useMemo(
-    () =>
-      STATES.map((s) => ({
-        name: s.name,
-        denial: s.denial[2025],
-        growth: +(((s.values[2025] - s.values[2018]) / s.values[2018]) * 100).toFixed(1),
-      })),
-    []
-  );
-
-  // Highest & lowest for callouts
-  const hiDenialState = useMemo(() => [...STATES].sort((a, b) => b.denial[2025] - a.denial[2025])[0], []);
-  const loDenialState = useMemo(() => [...STATES].sort((a, b) => a.denial[2025] - b.denial[2025])[0], []);
-  const hiGrowthState = useMemo(() => [...STATES].sort((a, b) => b.cagr - a.cagr)[0], []);
-  const loGrowthState = useMemo(() => [...STATES].sort((a, b) => a.cagr - b.cagr)[0], []);
-
   return (
     <div className="space-y-2">
       {/* Section header */}
@@ -105,7 +85,7 @@ export default function DenialRateEvidence() {
           <b>Chart 1</b> shows the 5 fastest-growing states. Notice their denial rates are all low (green bars) — credit flows easily there. <b>Chart 2</b> shows the 5 slowest-growing states. Their denial rates are higher (red bars) — buyers struggle to qualify, so demand stays weak.
         </p>
         <p className="mb-1">
-          <b>Chart 3</b> ranks all states from hardest to easiest to get a loan. <b>Chart 4</b> plots every state as a dot — as you move right (easier credit), the dots move up (more growth). That upward slope is the evidence: <b>where credit flows, growth follows</b>.
+          <b>Chart 3</b> ranks all states from hardest to easiest to get a loan — a quick scan of which markets reject the most buyers.
         </p>
       </div>
 
@@ -199,62 +179,6 @@ export default function DenialRateEvidence() {
           </div>
         </EvidenceCard>
       </div>
-
-      {/* Chart 4: Scatter — denial rate vs value growth */}
-      <EvidenceCard
-        title="Chart 4 — Denial rate vs. home value growth (all states)"
-        subtitle="Each dot = one state. Down = easier credit. Right = more growth."
-        takeaway="The pattern slopes down-and-to-the-right: low denial rates line up with high growth. Credit access is a real growth signal."
-      >
-        <div className="mb-1 flex flex-wrap gap-2 text-[9px]">
-          <span className="rounded bg-red-50 px-1.5 py-0.5 text-red-700">
-            🔴 Highest denial: <b>{hiDenialState.name}</b> ({hiDenialState.denial[2025]}%)
-          </span>
-          <span className="rounded bg-green-50 px-1.5 py-0.5 text-green-700">
-            🟢 Lowest denial: <b>{loDenialState.name}</b> ({loDenialState.denial[2025]}%)
-          </span>
-          <span className="rounded bg-blue-50 px-1.5 py-0.5 text-blue-700">
-            📈 Highest growth: <b>{hiGrowthState.name}</b> ({hiGrowthState.cagr}%/yr)
-          </span>
-          <span className="rounded bg-orange-50 px-1.5 py-0.5 text-orange-700">
-            📉 Lowest growth: <b>{loGrowthState.name}</b> ({loGrowthState.cagr}%/yr)
-          </span>
-        </div>
-        <div className="h-52 w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <ScatterChart margin={{ top: 8, right: 12, left: -18, bottom: 8 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
-              <XAxis
-                type="number"
-                dataKey="denial"
-                name="Denial rate"
-                tick={{ fontSize: 9, fill: "#666" }}
-                tickLine={false}
-                axisLine={false}
-                tickFormatter={(v) => `${v}%`}
-                label={{ value: "Denial rate →", position: "insideBottom", offset: -4, style: { fontSize: 9, fill: "#666" } }}
-              />
-              <YAxis
-                type="number"
-                dataKey="growth"
-                name="Value growth"
-                tick={{ fontSize: 9, fill: "#666" }}
-                tickLine={false}
-                axisLine={false}
-                tickFormatter={(v) => `${v}%`}
-                label={{ value: "Growth →", angle: -90, position: "insideLeft", style: { fontSize: 9, fill: "#666" } }}
-              />
-              <ZAxis range={[60, 60]} />
-              <Tooltip
-                contentStyle={TT}
-                cursor={{ strokeDasharray: "3 3" }}
-                formatter={(v, n) => [n === "growth" ? `${v}%` : `${v}%`, n === "growth" ? "Value growth" : "Denial rate"]}
-              />
-              <Scatter data={scatterData} fill="#5c6bc0" />
-            </ScatterChart>
-          </ResponsiveContainer>
-        </div>
-      </EvidenceCard>
 
       {/* Final verdict */}
       <div className="rounded-md border-2 border-[#1a237e] bg-[#f0f4ff] p-2.5">
