@@ -4,6 +4,7 @@ import { ArrowLeft, LayoutDashboard } from "lucide-react";
 import InvestmentSummary from "@/components/dashboard/InvestmentSummary";
 import DenialRateEvidence from "@/components/dashboard/DenialRateEvidence";
 import AffordabilityScorecard from "@/components/dashboard/AffordabilityScorecard";
+import InvestorVsOwnerChart from "@/components/dashboard/InvestorVsOwnerChart";
 
 export default function InvestmentSummaryPage() {
   return (
@@ -27,6 +28,7 @@ export default function InvestmentSummaryPage() {
       <main className="mx-auto max-w-5xl p-3">
         <InvestmentSummary />
         <AffordabilityScorecard />
+        <InvestorVsOwnerChart />
         <DenialRateEvidence />
       </main>
     </div>
