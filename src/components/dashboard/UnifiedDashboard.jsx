@@ -33,6 +33,7 @@ import {
 import { nationalAnnual, manufacturedAnnual, STATES, MSAS, forecastValues, FULL_YEARS, fmtUSD, fmtNum } from "@/data/hmdaMarket";
 import ChoroplethCard from "@/components/dashboard/ChoroplethCard";
 import InvestmentInsights from "@/components/dashboard/InvestmentInsights";
+import InvestmentEvidence from "@/components/dashboard/InvestmentEvidence";
 
 // Power BI navy-to-mauve palette
 const PB = ["#1a237e", "#283593", "#3949ab", "#5c6bc0", "#7986cb", "#9fa8da", "#c5cae9", "#e1bee7"];
@@ -253,6 +254,7 @@ export default function UnifiedDashboard({ year: initialYear }) {
 
         {/* Investment Insights */}
         <InvestmentInsights />
+        <InvestmentEvidence />
 
         {/* BQ1 — Market Size */}
         <div className="flex items-center gap-1.5 pt-1">
