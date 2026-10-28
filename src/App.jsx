@@ -15,6 +15,7 @@ import Q3SiteBuiltPremium from "@/pages/Q3SiteBuiltPremium";
 import Q4CreditAccess from "@/pages/Q4CreditAccess";
 import Q5Forecast from "@/pages/Q5Forecast";
 import UnifiedDashboardPage from "@/pages/UnifiedDashboardPage";
+import InvestmentSummaryPage from "@/pages/InvestmentSummaryPage";
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -46,6 +47,7 @@ const AuthenticatedApp = () => {
       <Route path="/reports/q3" element={<Q3SiteBuiltPremium />} />
       <Route path="/reports/q4" element={<Q4CreditAccess />} />
       <Route path="/reports/q5" element={<Q5Forecast />} />
+      <Route path="/investment-summary" element={<InvestmentSummaryPage />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
