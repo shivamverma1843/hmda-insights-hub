@@ -14,6 +14,7 @@ import {
   Tooltip,
   Legend,
   Cell,
+  LabelList,
 } from "recharts";
 import { STATES, FULL_YEARS } from "@/data/hmdaMarket";
 
@@ -75,6 +76,12 @@ export default function DenialRateEvidence() {
     []
   );
 
+  // Highest & lowest for callouts
+  const hiDenialState = useMemo(() => [...STATES].sort((a, b) => b.denial[2025] - a.denial[2025])[0], []);
+  const loDenialState = useMemo(() => [...STATES].sort((a, b) => a.denial[2025] - b.denial[2025])[0], []);
+  const hiGrowthState = useMemo(() => [...STATES].sort((a, b) => b.cagr - a.cagr)[0], []);
+  const loGrowthState = useMemo(() => [...STATES].sort((a, b) => a.cagr - b.cagr)[0], []);
+
   return (
     <div className="space-y-2">
       {/* Section header */}
@@ -119,6 +126,7 @@ export default function DenialRateEvidence() {
                 {top5.map((_, i) => (
                   <Cell key={i} fill={i === 0 ? "#16a34a" : ["#22c55e", "#4ade80", "#86efac", "#bbf7d0"][i % 4]} />
                 ))}
+                <LabelList dataKey="denial" position="top" formatter={(v) => `${v}%`} style={{ fontSize: 8, fill: "#333", fontWeight: "bold" }} />
               </Bar>
             </BarChart>
           </ResponsiveContainer>
@@ -142,6 +150,7 @@ export default function DenialRateEvidence() {
                 {bottom5.map((_, i) => (
                   <Cell key={i} fill={i === 0 ? "#dc2626" : ["#ef4444", "#f87171", "#fca5a5", "#fecaca"][i % 4]} />
                 ))}
+                <LabelList dataKey="denial" position="top" formatter={(v) => `${v}%`} style={{ fontSize: 8, fill: "#333", fontWeight: "bold" }} />
               </Bar>
             </BarChart>
           </ResponsiveContainer>
@@ -162,7 +171,9 @@ export default function DenialRateEvidence() {
                 <XAxis dataKey="name" tick={{ fontSize: 7, fill: "#666" }} tickLine={false} axisLine={false} angle={-25} textAnchor="end" height={48} interval={0} />
                 <YAxis tick={{ fontSize: 8, fill: "#666" }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}%`} />
                 <Tooltip contentStyle={TT} formatter={(v) => [`${v}%`, "Denial"]} />
-                <Bar dataKey="denial" radius={[2, 2, 0, 0]} fill="#dc2626" />
+                <Bar dataKey="denial" radius={[2, 2, 0, 0]} fill="#dc2626">
+                  <LabelList dataKey="denial" position="top" formatter={(v) => `${v}%`} style={{ fontSize: 8, fill: "#333", fontWeight: "bold" }} />
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -180,7 +191,9 @@ export default function DenialRateEvidence() {
                 <XAxis dataKey="name" tick={{ fontSize: 7, fill: "#666" }} tickLine={false} axisLine={false} angle={-25} textAnchor="end" height={48} interval={0} />
                 <YAxis tick={{ fontSize: 8, fill: "#666" }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}%`} />
                 <Tooltip contentStyle={TT} formatter={(v) => [`${v}%`, "Denial"]} />
-                <Bar dataKey="denial" radius={[2, 2, 0, 0]} fill="#16a34a" />
+                <Bar dataKey="denial" radius={[2, 2, 0, 0]} fill="#16a34a">
+                  <LabelList dataKey="denial" position="top" formatter={(v) => `${v}%`} style={{ fontSize: 8, fill: "#333", fontWeight: "bold" }} />
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -193,6 +206,20 @@ export default function DenialRateEvidence() {
         subtitle="Each dot = one state. Down = easier credit. Right = more growth."
         takeaway="The pattern slopes down-and-to-the-right: low denial rates line up with high growth. Credit access is a real growth signal."
       >
+        <div className="mb-1 flex flex-wrap gap-2 text-[9px]">
+          <span className="rounded bg-red-50 px-1.5 py-0.5 text-red-700">
+            🔴 Highest denial: <b>{hiDenialState.name}</b> ({hiDenialState.denial[2025]}%)
+          </span>
+          <span className="rounded bg-green-50 px-1.5 py-0.5 text-green-700">
+            🟢 Lowest denial: <b>{loDenialState.name}</b> ({loDenialState.denial[2025]}%)
+          </span>
+          <span className="rounded bg-blue-50 px-1.5 py-0.5 text-blue-700">
+            📈 Highest growth: <b>{hiGrowthState.name}</b> ({hiGrowthState.cagr}%/yr)
+          </span>
+          <span className="rounded bg-orange-50 px-1.5 py-0.5 text-orange-700">
+            📉 Lowest growth: <b>{loGrowthState.name}</b> ({loGrowthState.cagr}%/yr)
+          </span>
+        </div>
         <div className="h-52 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <ScatterChart margin={{ top: 8, right: 12, left: -18, bottom: 8 }}>
