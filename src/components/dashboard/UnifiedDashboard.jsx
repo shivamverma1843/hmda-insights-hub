@@ -119,12 +119,12 @@ export default function UnifiedDashboard({ year: initialYear }) {
   const medianTrendData = useMemo(() => nationalAnnual.map((n) => ({ year: n.year, value: n.medianProperty })), []);
 
   const topMSAs = useMemo(
-    () => [...MSAS].sort((a, b) => b.cagr - a.cagr).slice(0, 10).map((m) => ({ name: m.name.split("-")[0], cagr: m.cagr })),
+    () => [...MSAS].sort((a, b) => b.cagr - a.cagr).slice(0, 10).map((m) => ({ name: m.name, cagr: m.cagr })),
     []
   );
 
   const stateByValue = useMemo(
-    () => [...STATES].map((s) => ({ name: s.code, value: s.values[year] })).sort((a, b) => b.value - a.value).slice(0, 12),
+    () => [...STATES].map((s) => ({ name: s.name, value: s.values[year] })).sort((a, b) => b.value - a.value).slice(0, 12),
     [year]
   );
 
@@ -139,7 +139,7 @@ export default function UnifiedDashboard({ year: initialYear }) {
   const volumeVsGrowth = useMemo(
     () =>
       STATES.map((s) => ({
-        name: s.code,
+        name: s.name,
         volume: s.originations,
         growth: +(((s.values[year] - s.values[2018]) / s.values[2018]) * 100).toFixed(1),
       })),
@@ -169,7 +169,7 @@ export default function UnifiedDashboard({ year: initialYear }) {
   const denialVsGrowth = useMemo(
     () =>
       [...STATES].slice(0, 10).map((s) => ({
-        name: s.code,
+        name: s.name,
         "Denial rate": s.denial[year],
         "Value growth": +(((s.values[year] - s.values[2018]) / s.values[2018]) * 100).toFixed(1),
       })),
@@ -180,7 +180,7 @@ export default function UnifiedDashboard({ year: initialYear }) {
     const top5 = [...STATES].sort((a, b) => b.cagr - a.cagr).slice(0, 5);
     return FULL_YEARS.map((y) => {
       const r = { year: y };
-      top5.forEach((s) => (r[s.code] = s.denial[y]));
+      top5.forEach((s) => (r[s.name] = s.denial[y]));
       return r;
     });
   }, []);
@@ -202,7 +202,7 @@ export default function UnifiedDashboard({ year: initialYear }) {
   );
 
   const fastestStates = useMemo(
-    () => [...STATES].sort((a, b) => b.cagr - a.cagr).slice(0, 8).map((s) => ({ name: s.code, cagr: s.cagr })),
+    () => [...STATES].sort((a, b) => b.cagr - a.cagr).slice(0, 8).map((s) => ({ name: s.name, cagr: s.cagr })),
     []
   );
 
@@ -338,7 +338,7 @@ export default function UnifiedDashboard({ year: initialYear }) {
                 <BarChart data={topMSAs} layout="vertical" margin={{ top: 2, right: 8, left: 0, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#eee" horizontal={false} />
                   <XAxis type="number" tick={{ fontSize: 8, fill: "#666" }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}%`} />
-                  <YAxis type="category" dataKey="name" width={70} tick={{ fontSize: 8, fill: "#666" }} tickLine={false} axisLine={false} />
+                  <YAxis type="category" dataKey="name" width={110} tick={{ fontSize: 7, fill: "#666" }} tickLine={false} axisLine={false} />
                   <Tooltip contentStyle={TT} formatter={(v) => [`${v}%`, "CAGR"]} />
                   <Bar dataKey="cagr" radius={[0, 2, 2, 0]} fill="#283593" />
                 </BarChart>
@@ -351,7 +351,7 @@ export default function UnifiedDashboard({ year: initialYear }) {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={stateByValue} margin={{ top: 2, right: 2, left: -18, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#eee" vertical={false} />
-                  <XAxis dataKey="name" tick={{ fontSize: 7, fill: "#666" }} tickLine={false} axisLine={false} />
+                  <XAxis dataKey="name" tick={{ fontSize: 7, fill: "#666" }} tickLine={false} axisLine={false} angle={-25} textAnchor="end" height={48} interval={0} />
                   <YAxis tick={{ fontSize: 8, fill: "#666" }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v / 1000}K`} />
                   <Tooltip contentStyle={TT} formatter={(v) => [fmtUSD(v), "Median"]} />
                   <Bar dataKey="value" radius={[2, 2, 0, 0]} fill="#3949ab" />
@@ -448,7 +448,7 @@ export default function UnifiedDashboard({ year: initialYear }) {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={denialVsGrowth} margin={{ top: 2, right: 2, left: -18, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#eee" vertical={false} />
-                  <XAxis dataKey="name" tick={{ fontSize: 8, fill: "#666" }} tickLine={false} axisLine={false} />
+                  <XAxis dataKey="name" tick={{ fontSize: 7, fill: "#666" }} tickLine={false} axisLine={false} angle={-25} textAnchor="end" height={48} interval={0} />
                   <YAxis tick={{ fontSize: 8, fill: "#666" }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}%`} />
                   <Tooltip contentStyle={TT} formatter={(v) => [`${v}%`]} />
                   <Legend wrapperStyle={{ fontSize: 9 }} />
@@ -469,8 +469,8 @@ export default function UnifiedDashboard({ year: initialYear }) {
                   <Tooltip contentStyle={TT} formatter={(v) => [`${v}%`]} labelFormatter={(l) => `Year ${l}`} />
                   <Legend wrapperStyle={{ fontSize: 8 }} />
                   {[0, 1, 2, 3, 4].map((i) => {
-                    const code = [...STATES].sort((a, b) => b.cagr - a.cagr)[i].code;
-                    return <Line key={code} type="monotone" dataKey={code} stroke={colorFor(i)} strokeWidth={1.5} dot={false} />;
+                    const stateName = [...STATES].sort((a, b) => b.cagr - a.cagr)[i].name;
+                    return <Line key={stateName} type="monotone" dataKey={stateName} stroke={colorFor(i)} strokeWidth={1.5} dot={false} />;
                   })}
                 </LineChart>
               </ResponsiveContainer>
@@ -491,7 +491,7 @@ export default function UnifiedDashboard({ year: initialYear }) {
                 <BarChart data={fastestStates} layout="vertical" margin={{ top: 2, right: 8, left: 0, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#eee" horizontal={false} />
                   <XAxis type="number" tick={{ fontSize: 8, fill: "#666" }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}%`} />
-                  <YAxis type="category" dataKey="name" width={28} tick={{ fontSize: 8, fill: "#666" }} tickLine={false} axisLine={false} />
+                  <YAxis type="category" dataKey="name" width={80} tick={{ fontSize: 8, fill: "#666" }} tickLine={false} axisLine={false} />
                   <Tooltip contentStyle={TT} formatter={(v) => [`${v}%`, "CAGR"]} />
                   <Bar dataKey="cagr" radius={[0, 2, 2, 0]} fill="#7986cb" />
                 </BarChart>
@@ -499,7 +499,7 @@ export default function UnifiedDashboard({ year: initialYear }) {
             </div>
           </PbCard>
 
-          <PbCard bq="Q5" title="MSA Forecast" subtitle={`${activeMsa?.name?.split("-")[0] ?? ""} — actual & projected`} className="lg:col-span-2">
+          <PbCard bq="Q5" title="MSA Forecast" subtitle={`${activeMsa?.name ?? ""} — actual & projected`} className="lg:col-span-2">
             <div className="space-y-1">
               <select
                 value={selectedMsa}

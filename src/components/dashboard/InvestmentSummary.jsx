@@ -40,8 +40,8 @@ export default function InvestmentSummary() {
   const boise = MSAS.find((m) => m.name.startsWith("Boise"));
 
   // Best performers
-  const topStates = useMemo(() => STATES.slice(0, 5).map((s) => ({ name: s.code, cagr: s.cagr })), []);
-  const topMsas = useMemo(() => MSAS.slice(0, 5).map((m) => ({ name: m.name.split("-")[0], cagr: m.cagr })), []);
+  const topStates = useMemo(() => STATES.slice(0, 5).map((s) => ({ name: s.name, cagr: s.cagr })), []);
+  const topMsas = useMemo(() => MSAS.slice(0, 5).map((m) => ({ name: m.name, cagr: m.cagr })), []);
 
   // Worst performers (slowest growth)
   const bottomStates = useMemo(
@@ -49,7 +49,7 @@ export default function InvestmentSummary() {
       [...STATES]
         .sort((a, b) => a.cagr - b.cagr)
         .slice(0, 5)
-        .map((s) => ({ name: s.code, cagr: s.cagr })),
+        .map((s) => ({ name: s.name, cagr: s.cagr })),
     []
   );
   const bottomMsas = useMemo(
@@ -57,7 +57,7 @@ export default function InvestmentSummary() {
       [...MSAS]
         .sort((a, b) => a.cagr - b.cagr)
         .slice(0, 5)
-        .map((m) => ({ name: m.name.split("-")[0], cagr: m.cagr })),
+        .map((m) => ({ name: m.name, cagr: m.cagr })),
     []
   );
 
@@ -67,7 +67,7 @@ export default function InvestmentSummary() {
       [...STATES]
         .sort((a, b) => b.denial[2025] - a.denial[2025])
         .slice(0, 5)
-        .map((s) => ({ name: s.code, denial: s.denial[2025] })),
+        .map((s) => ({ name: s.name, denial: s.denial[2025] })),
     []
   );
 
@@ -107,9 +107,9 @@ export default function InvestmentSummary() {
             <p className="mb-0.5 text-[9px] font-semibold text-[#333]">Fastest-growing states (annual growth rate)</p>
             <div className="h-24 w-full">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={topStates} margin={{ top: 2, right: 4, left: -18, bottom: 0 }}>
+                <BarChart data={topStates} margin={{ top: 2, right: 4, left: -18, bottom: 30 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#eee" vertical={false} />
-                  <XAxis dataKey="name" tick={{ fontSize: 8, fill: "#666" }} tickLine={false} axisLine={false} />
+                  <XAxis dataKey="name" tick={{ fontSize: 7, fill: "#666" }} tickLine={false} axisLine={false} angle={-20} textAnchor="end" height={36} interval={0} />
                   <YAxis tick={{ fontSize: 8, fill: "#666" }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}%`} />
                   <Tooltip contentStyle={TT} formatter={(v) => [`${v}%`, "Growth/yr"]} />
                   <Bar dataKey="cagr" radius={[2, 2, 0, 0]}>
@@ -163,9 +163,9 @@ export default function InvestmentSummary() {
             <p className="mb-0.5 text-[9px] font-semibold text-[#333]">Slowest-growing states (annual growth rate)</p>
             <div className="h-24 w-full">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={bottomStates} margin={{ top: 2, right: 4, left: -18, bottom: 0 }}>
+                <BarChart data={bottomStates} margin={{ top: 2, right: 4, left: -18, bottom: 30 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#eee" vertical={false} />
-                  <XAxis dataKey="name" tick={{ fontSize: 8, fill: "#666" }} tickLine={false} axisLine={false} />
+                  <XAxis dataKey="name" tick={{ fontSize: 7, fill: "#666" }} tickLine={false} axisLine={false} angle={-20} textAnchor="end" height={36} interval={0} />
                   <YAxis tick={{ fontSize: 8, fill: "#666" }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}%`} />
                   <Tooltip contentStyle={TT} formatter={(v) => [`${v}%`, "Growth/yr"]} />
                   <Bar dataKey="cagr" radius={[2, 2, 0, 0]} fill="#dc2626">
@@ -222,7 +222,7 @@ export default function InvestmentSummary() {
           </div>
           <div className="rounded border border-red-200 bg-red-50/50 px-2 py-1.5 text-center">
             <p className="text-[8px] uppercase text-[#999]">Worst state</p>
-            <p className="text-sm font-bold text-red-700">{slowestState.code}</p>
+            <p className="text-sm font-bold text-red-700">{slowestState.name}</p>
             <p className="text-[9px] text-[#666]">{slowestState.cagr}%/yr growth</p>
           </div>
           <div className="rounded border border-red-200 bg-red-50/50 px-2 py-1.5 text-center">

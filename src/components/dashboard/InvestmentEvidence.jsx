@@ -59,8 +59,8 @@ export default function InvestmentEvidence() {
     []
   );
 
-  // Chart 2: Top 5 states ranked
-  const top5States = useMemo(() => STATES.slice(0, 5).map((s) => ({ name: s.code, cagr: s.cagr })), []);
+  // Chart 2: Top 5 states ranked (full names)
+  const top5States = useMemo(() => STATES.slice(0, 5).map((s) => ({ name: s.name, cagr: s.cagr })), []);
 
   // Chart 3: Boise vs Idaho vs US
   const boiseVsIdaho = useMemo(
@@ -127,10 +127,13 @@ export default function InvestmentEvidence() {
       <div className="grid grid-cols-1 gap-1.5 lg:grid-cols-2">
         <ChartCard
           step="1"
-          title="Idaho vs the rest of the country"
-          takeaway="Idaho's line rises much faster than the US average — property values grew nearly twice as fast."
+          title="Idaho vs the rest of the country (US average)"
+          takeaway="Idaho's line rises much faster than the US average — property values grew nearly twice as fast. The gap between the two lines is your profit advantage."
         >
-          <div className="h-36 w-full">
+          <div className="mb-1 rounded bg-[#f0f4ff] px-1.5 py-1 text-[9px] text-[#1a237e]">
+            📖 <b>How to read this:</b> The solid navy line is <b>Idaho</b>. The dashed grey line is the <b>US average</b> (all states combined). The higher Idaho's line sits above the US line, the more Idaho is outperforming the country. In 2018 they were close — by 2025 Idaho is far ahead.
+          </div>
+          <div className="h-32 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={idahoVsNational} margin={{ top: 2, right: 4, left: -18, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#eee" vertical={false} />
@@ -152,9 +155,9 @@ export default function InvestmentEvidence() {
         >
           <div className="h-36 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={top5States} margin={{ top: 2, right: 4, left: -18, bottom: 0 }}>
+              <BarChart data={top5States} margin={{ top: 2, right: 4, left: -18, bottom: 30 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#eee" vertical={false} />
-                <XAxis dataKey="name" tick={{ fontSize: 8, fill: "#666" }} tickLine={false} axisLine={false} />
+                <XAxis dataKey="name" tick={{ fontSize: 7, fill: "#666" }} tickLine={false} axisLine={false} angle={-20} textAnchor="end" height={36} interval={0} />
                 <YAxis tick={{ fontSize: 8, fill: "#666" }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}%`} />
                 <Tooltip contentStyle={TT} formatter={(v) => [`${v}% per year`, "Growth"]} />
                 <Bar dataKey="cagr" radius={[2, 2, 0, 0]}>
