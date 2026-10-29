@@ -175,7 +175,14 @@ export default function InvestmentEvidence() {
           title="Boise City grows even faster than Idaho"
           takeaway="Boise's line is above Idaho's — the city is the engine driving the state's growth."
         >
-          <div className="h-36 w-full">
+          <div className="mb-1 rounded bg-[#f0f4ff] px-1.5 py-1 text-[9px] leading-relaxed text-[#1a237e]">
+            📖 <b>How to read this:</b> Three lines are shown. The <b>top navy line is Boise City</b> — the state capital and largest city in Idaho. The <b>middle blue line is Idaho</b> as a whole (all cities and towns combined). The <b>bottom dashed grey line is the US average</b>. Boise sits above Idaho, which sits above the US — meaning the city grows faster than the state, and the state grows faster than the country.
+            <br /><br />
+            <b>Why this matters:</b> Cities drive growth. When a city's economy booms — new jobs, new residents, new businesses — property values there rise faster than the surrounding state. Boise's population has surged as people move from expensive coastal cities (California, Washington) seeking cheaper housing and remote-work lifestyles. This in-migration pushes demand — and prices — up. A home in Boise that cost {fmtUSD(boise.values[2018])} in 2018 is now worth {fmtUSD(boise.values[2025])}, a <b>{boiseGrowthPct}% gain</b> — outpacing both Idaho ({idahoGrowthPct}%) and the US ({usGrowthPct}%).
+            <br /><br />
+            <b>The lesson for investors:</b> Don't just invest in a "hot state" — invest in the <b>specific city</b> driving that state's growth. The city captures the biggest gains.
+          </div>
+          <div className="h-32 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={boiseVsIdaho} margin={{ top: 2, right: 4, left: -18, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#eee" vertical={false} />
@@ -196,7 +203,14 @@ export default function InvestmentEvidence() {
           title="Idaho is expected to keep growing"
           takeaway="The forecast (dashed red) shows values continuing to rise through 2028 — the trend isn't slowing down."
         >
-          <div className="h-36 w-full">
+          <div className="mb-1 rounded bg-[#f0f4ff] px-1.5 py-1 text-[9px] leading-relaxed text-[#1a237e]">
+            📖 <b>How to read this:</b> The <b>solid navy line</b> shows Idaho's actual median home values from 2018 to 2025 — real data we already know. The <b>dashed red line</b> is a <b>forecast</b> — a prediction of where values are heading from 2026 to 2028, based on the trend of the past 7 years. We use a statistical method called <b>linear regression</b>: it draws a straight line through the past data points and extends it into the future.
+            <br /><br />
+            <b>What the forecast shows:</b> Idaho values are projected to reach roughly <b>{fmtUSD(idahoForecast[0].value)} in 2026</b>, <b>{fmtUSD(idahoForecast[1].value)} in 2027</b>, and <b>{fmtUSD(idahoForecast[2].value)} by 2028</b>. The line keeps rising — meaning if current trends continue, Idaho homeowners and investors can expect values to keep climbing.
+            <br /><br />
+            <b>Why this matters:</b> Real estate is a long-term game. You don't just want a market that grew in the past — you want one that will <b>keep growing</b> after you buy. Idaho's forecast gives confidence that the boom isn't over. Of course, no forecast is guaranteed — interest rates, job markets, and population trends can shift. But based on 7 years of data, Idaho's direction is clearly upward.
+          </div>
+          <div className="h-32 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={idahoForecastData} margin={{ top: 2, right: 4, left: -18, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#eee" vertical={false} />
